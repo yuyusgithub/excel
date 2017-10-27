@@ -17,6 +17,7 @@ import zyx.importfile.exception.FileImportException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +31,7 @@ public class ExcelImportor extends FileImportor {
 
 
     @Override
-    public ImportResult getImportResult(File file, String fileName) throws FileImportException {
+    public ImportResult getImportResult(InputStream is, String fileName) throws FileImportException {
         if (configuration == null) {
             throw new FileImportException("configuration is null");
         }
@@ -40,13 +41,13 @@ public class ExcelImportor extends FileImportor {
                 .substring(fileName.lastIndexOf(".") + 1);
         if ("xls".equals(extension)) {
             try {
-                workbook = new HSSFWorkbook(new FileInputStream(file));
+                workbook = new HSSFWorkbook(is);
             } catch (IOException e) {
                 throw new FileImportException(e, e.getMessage());
             }
         } else if ("xlsx".equals(extension)) {
             try {
-                workbook = new XSSFWorkbook(new FileInputStream(file));
+                workbook = new XSSFWorkbook(is);
             } catch (IOException e) {
                 throw new FileImportException(e, e.getMessage());
             }

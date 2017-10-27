@@ -6,15 +6,16 @@ import zyx.importfile.exception.FileImportException;
 import zyx.importfile.impl.ExcelImportor;
 
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * Created by stark.zhang on 2015/11/28.
  */
 public class FileImportExecutor {
 
-    public static ImportResult importFile(Configuration configuration, File file, String fileName) throws FileImportException{
+    public static ImportResult importFile(Configuration configuration, InputStream is, String fileName) throws FileImportException{
         FileImportor fileImportor = getFileImportor(configuration);
-        return fileImportor.getImportResult(file, fileName);
+        return fileImportor.getImportResult(is, fileName);
     }
 
     /**

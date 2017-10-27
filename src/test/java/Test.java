@@ -23,9 +23,7 @@ public class Test {
     public static void main(String[] args) throws FileImportException, FileNotFoundException, FileExportException, URISyntaxException {
 
         testImport();
-//        URL u = Test.class.getResource("import/config.xml");
-//        System.out.println(u.toString());
-        testExport();
+//        testExport();
     }
 
 
@@ -34,10 +32,11 @@ public class Test {
         ConfigParser configParser = ConfigurationParserFactory.getConfigParser(Configuration.ParserType.XML);
         URI uri = Test.class.getResource("import/testImport.xlsx").toURI();
         File importFile = new File(uri);
+        InputStream inputStream = new FileInputStream(importFile);
         Configuration configuration = null;
         try {
             configuration = configParser.getConfig(Test.class.getResourceAsStream("import/config.xml"));
-            MapResult mapResult = (MapResult) FileImportExecutor.importFile(configuration, importFile, importFile.getName());
+            MapResult mapResult = (MapResult) FileImportExecutor.importFile(configuration, inputStream, importFile.getName());
             List<Map> maps = mapResult.getResult();
             for (Map<String, Object> map : maps) {
                 int index = (int) map.get("index");
